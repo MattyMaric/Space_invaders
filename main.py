@@ -1,11 +1,11 @@
+import turtle
 import random
 import time
-import turtle
 
 FRAME_RATE = 30  # Frames per second
 TIME_FOR_1_FRAME = 1 / FRAME_RATE  # Seconds
 
-CANNON_STEP = 12.5
+CANNON_STEP = 10
 LASER_SPEED = 20
 ALIEN_SPAWN_INTERVAL = 1.2  # Seconds
 BASE_ALIEN_SPEED = 3.5
@@ -14,8 +14,11 @@ ALIEN_SPEED_INCREMENT = 0.1  # Speed increment per score point
 window = turtle.Screen()
 window.tracer(0)
 window.setup(0.5, 0.75)
-window.bgcolor(0.2, 0.2, 0.2)
+window.bgcolor("black")  # Set background color if needed
 window.title("The Real Python Space Invaders")
+
+# Load and set the background GIF
+window.bgpic("background.gif")  # Replace "background.gif" with your actual file name
 
 # Register custom shapes
 window.addshape("cannon.gif")
