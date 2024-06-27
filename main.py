@@ -1,8 +1,9 @@
 import turtle
 import random
 import time
+import winsound
 
-FRAME_RATE = 30  # Frames per second
+FRAME_RATE = 60  # Frames per second
 TIME_FOR_1_FRAME = 1 / FRAME_RATE  # Seconds
 
 CANNON_STEP = 10
@@ -33,6 +34,20 @@ TOP = window.window_height() / 2
 BOTTOM = -window.window_height() / 2
 FLOOR_LEVEL = 0.9 * BOTTOM
 GUTTER = 0.025 * window.window_width()
+
+laser_sound = "laser.wav"  # Replace with your actual sound file
+hit_sound = "hit.wav"  # Replace with your actual sound file
+game_over_sound = "game_over.wav"  # Replace with your actual sound file
+
+def play_laser_sound():
+    winsound.PlaySound(laser_sound, winsound.SND_ASYNC)
+
+def play_hit_sound():
+    winsound.PlaySound(hit_sound, winsound.SND_ASYNC)
+
+def play_game_over_sound():
+    winsound.PlaySound(game_over_sound, winsound.SND_ASYNC)
+
 
 # Create laser cannon
 cannon = turtle.Turtle()
@@ -75,6 +90,7 @@ def create_laser():
     laser.shape("laser.gif")
     laser.setposition(cannon.xcor(), cannon.ycor() + 20)  # Position just above cannon tip
     lasers.append(laser)
+    play_laser_sound()
 
 def move_laser(laser):
     laser.setheading(90)  # Ensure laser moves upwards
@@ -150,6 +166,7 @@ def game_loop():
                     remove_sprite(laser, lasers)
                     remove_sprite(alien, aliens)
                     score += 1
+                    play_hit_sound()
                     break
         # Spawn new aliens when time interval elapsed
         if time.time() - alien_timer > ALIEN_SPAWN_INTERVAL:
@@ -165,6 +182,7 @@ def game_loop():
             # Check for game over
             if alien.ycor() < FLOOR_LEVEL:
                 game_running = False
+                play_game_over_sound()
                 break
 
         time_for_this_frame = time.time() - timer_this_frame
